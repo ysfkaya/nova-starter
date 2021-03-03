@@ -1,0 +1,30 @@
+{
+    "name": "ysfkaya/settings",
+    "description": "Laravel nova Settings tool.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "akaunting/setting": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ysfkaya\\Settings\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ysfkaya\\Settings\\ToolServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
