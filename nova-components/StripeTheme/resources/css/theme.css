@@ -22,16 +22,17 @@
     --shadow-card: 0 7px 14px 0 rgba(59, 65, 94, .1), 0 3px 6px 0 rgba(0, 0, 0, .07);
 }
 
-#nova > div > .content > .bg-white {
+#nova>div>.content>.bg-white {
     background: transparent;
     box-shadow: none;
 }
 
-#nova > div > .content > div > a {
+#nova>div>.content>div>a {
     display: none;
 }
 
-.px-view, .py-view {
+.px-view,
+.py-view {
     padding: 1.5rem;
 }
 
@@ -109,7 +110,8 @@
     box-shadow: var(--shadow);
 }
 
-[dusk="global-search"], [dusk="global-search"]:focus {
+[dusk="global-search"],
+[dusk="global-search"]:focus {
     border-width: 0;
     border-radius: 4px;
     box-shadow: var(--shadow);
@@ -118,4 +120,17 @@
 
 .bg-80:not(.fixed.pin) {
     background-color: transparent !important;
+}
+
+.notifications svg {
+    width: 1.4rem !important;
+}
+
+.notifications svg:not(.w-8) {
+    margin-left: 0 !important;
+}
+
+.notifications span span.absolute {
+    right: -10px !important;
+    top: 7px !important;
 }

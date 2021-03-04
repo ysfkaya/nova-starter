@@ -15,10 +15,11 @@
         "laravel/framework": "^8.12",
         "laravel/nova": "~3.0",
         "laravel/tinker": "^2.5",
+        "mirovit/nova-notifications": "^1.0",
         "vyuldashev/nova-permission": "^2.11",
-        "ysfkaya/stripe-theme": "*",
+        "ysfkaya/checkboxes": "*",
         "ysfkaya/settings": "*",
-        "ysfkaya/checkboxes": "*"
+        "ysfkaya/stripe-theme": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
