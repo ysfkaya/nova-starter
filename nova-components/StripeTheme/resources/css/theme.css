@@ -134,3 +134,7 @@
     right: -10px !important;
     top: 7px !important;
 }
+
+div.z-50.open div div div div.select-none.overflow-hidden.bg-white.border.border-60.shadow.rounded-lg[direction="rtl"][style="width: 600px;"] {
+    width: 400px !important;
+}
