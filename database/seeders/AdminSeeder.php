@@ -14,16 +14,16 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $admin = Admin::firstOrCreate(['email' => 'satis@pentayazilim.com'], [
-            'name' => 'Penta',
-            'password' => bcrypt('123Penta')
+        $admin = Admin::firstOrCreate(['email' => 'app@developer.com'], [
+            'name' => 'Developer',
+            'password' => bcrypt('123')
         ]);
 
         $admin->assignRole('developer');
 
-        $owner = Admin::firstOrCreate(['email' => 'owner@pentayazilim.com'], [
+        $owner = Admin::firstOrCreate(['email' => 'owner@site.com'], [
             'name' => 'Owner',
-            'password' => bcrypt('123Owner')
+            'password' => bcrypt('123')
         ]);
 
         $owner->assignRole('owner');
