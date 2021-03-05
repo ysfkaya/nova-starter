@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "ysfkaya/nova-starter",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "A starter project with using Laravel's Nova Dashboard",
     "keywords": [
         "framework",
         "laravel"
