@@ -41,9 +41,7 @@ class SettingController extends Controller
 
         $requestAttributes = $this->replaceBrackets($request->except('_token', '_method'));
 
-        $attributes = array_filter($requestAttributes, function ($value) {
-            return !is_null($value);
-        });
+        $attributes = $requestAttributes;
 
         foreach ($attributes as $key => $attribute) {
             if ($attribute instanceof UploadedFile) {
