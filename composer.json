@@ -17,7 +17,11 @@
         "laravel/tinker": "^2.5",
         "mirovit/nova-notifications": "^1.0",
         "vyuldashev/nova-permission": "^2.11",
+        "waynestate/nova-ckeditor4-field": "^0.7.0",
+        "davidpiesse/nova-maintenance-mode": "*",
+        "tightenco/nova-google-analytics": "*",
         "ysfkaya/checkboxes": "*",
+        "ysfkaya/phone-number": "*",
         "ysfkaya/settings": "*",
         "ysfkaya/stripe-theme": "*"
     },
@@ -62,11 +66,23 @@
         },
         {
             "type": "path",
+            "url": "./nova-components/NovaGoogleAnalytics"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/PhoneNumber"
+        },
+        {
+            "type": "path",
             "url": "./nova-components/Settings"
         },
         {
             "type": "path",
             "url": "./nova-components/Checkboxes"
+        },
+        {
+            "type": "path",
+            "url": "./nova-components/MaintanceMode"
         }
     ],
     "minimum-stability": "dev",

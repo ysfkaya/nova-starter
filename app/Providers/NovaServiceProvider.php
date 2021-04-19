@@ -3,11 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Admin;
+use App\Nova\Metrics\NewUser;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Mirovit\NovaNotifications\NovaNotifications;
+use Davidpiesse\NovaMaintenanceMode\Tool as Maintance;
+use Illuminate\Http\Resources\MissingValue;
 use Ysfkaya\Settings\SettingTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -56,9 +59,25 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [
-            new Help,
-        ];
+        $hasAnalytics = setting('analytics.view_id') && !empty(setting('analytics.credentials'));
+
+        $analyticCards = $this->_when($hasAnalytics, function () {
+            return [
+                new \Tightenco\NovaGoogleAnalytics\ActiveUsers,
+                new \Tightenco\NovaGoogleAnalytics\PageViewsMetric,
+                new \Tightenco\NovaGoogleAnalytics\VisitorsMetric,
+                // new \Tightenco\NovaGoogleAnalytics\ReferrersList,
+                new \Tightenco\NovaGoogleAnalytics\TopBrowsers,
+                new \Tightenco\NovaGoogleAnalytics\MostVisitedPagesCard,
+            ];
+        }, []);
+
+
+        return array_merge([
+            NewUser::make()->canSeeWhen('view user'),
+        ], $analyticCards);
+
+        return [];
     }
 
     /**
@@ -79,6 +98,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function tools()
     {
         return [
+            Maintance::make()->canSee(function ($request) {
+                return $request->user()->isSuper();
+            }),
+
             SettingTool::make(),
             NovaNotifications::make()
         ];
@@ -92,5 +115,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function register()
     {
         //
+    }
+
+
+    protected function _when($condition, $value, $default = null)
+    {
+        if ($condition) {
+            return value($value);
+        }
+
+        return func_num_args() === 3 ? value($default) : new MissingValue;
     }
 }

@@ -432,5 +432,7 @@
     "Admins": "Yöneticiler",
     "Admin": "Yönetici",
     "Roles": "Yetkiler",
-    "Role": "Yetki"
+    "Role": "Yetki",
+    "Maintenance Mode": "Bakım Modu",
+    "Message for visitors": "Ziyaretçiler için bir mesaj"
 }

@@ -41,4 +41,9 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isSuper()
+    {
+        return $this->hasAnyRole(Role::IGNORE_ROLES);
+    }
 }
