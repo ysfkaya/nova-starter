@@ -11,6 +11,7 @@ use Laravel\Nova\NovaApplicationServiceProvider;
 use Mirovit\NovaNotifications\NovaNotifications;
 use Davidpiesse\NovaMaintenanceMode\Tool as Maintance;
 use Illuminate\Http\Resources\MissingValue;
+use Illuminate\Support\Facades\Route;
 use Ysfkaya\Settings\SettingTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -36,6 +37,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->withAuthenticationRoutes()
             ->withPasswordResetRoutes()
             ->register();
+
+        $prefix = Nova::path() . '/filemanager';
+
+        Route::middleware(config('nova.middleware', []))
+            ->domain(config('nova.domain', null))
+            ->prefix($prefix)
+            ->group(function () {
+                \UniSharp\LaravelFilemanager\Lfm::routes();
+            });
     }
 
     /**

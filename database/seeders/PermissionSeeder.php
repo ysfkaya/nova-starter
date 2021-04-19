@@ -30,5 +30,6 @@ class PermissionSeeder extends Seeder
         $this->makePermission('role');
         $this->makePermission('user');
         $this->makePermission('admin');
+        $this->makePermission('page');
     }
 }

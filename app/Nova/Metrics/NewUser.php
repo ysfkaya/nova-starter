@@ -8,6 +8,8 @@ use Laravel\Nova\Metrics\Value;
 
 class NewUser extends Value
 {
+    public $name = 'Yeni Kullanıcılar';
+
     /**
      * Calculate the value of the metric.
      *

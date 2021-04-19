@@ -16,8 +16,8 @@ class FieldServiceProvider extends ServiceProvider
     public function boot()
     {
         Nova::serving(function (ServingNova $event) {
-            Nova::script('tel-input', public_path('assets/plugin/intltelinput/js/intlTelInput.min.js'));
-            Nova::style('tel-input', public_path('assets/plugin/intltelinput/css/intlTelInput.min.css'));
+            Nova::script('tel-input', __DIR__ . '/../public/intltelinput/js/intlTelInput.min.js');
+            Nova::style('tel-input', __DIR__ . '/../public/intltelinput/css/intlTelInput.min.css');
             Nova::script('phone-number', __DIR__ . '/../dist/js/field.js');
             Nova::style('phone-number', __DIR__ . '/../dist/css/field.css');
         });

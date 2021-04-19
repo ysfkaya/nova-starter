@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Page;
 use App\Models\Permission;
-use App\Models\Role;
 use App\Policies\RolePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -26,13 +26,26 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability, $arguments) {
-            $model = head($arguments);
-
-            return $model == Permission::class ? false : ($user->hasAnyRole(Role::IGNORE_ROLES) ? true : null);
-        });
+        Gate::before($this->beforeGateCallback());
 
         Gate::policy(config('permission.models.role'), RolePolicy::class);
         Gate::policy(config('permission.models.permission'), RolePolicy::class);
+    }
+
+    private function beforeGateCallback()
+    {
+        return function ($user, $ability, $arguments) {
+            $model = head($arguments);
+
+            if ($model == Permission::class || $model instanceof Permission) {
+                return false;
+            }
+
+            if ($model instanceof Page && $ability == 'delete') {
+                return null;
+            }
+
+            return $user->isSuper() ? true : null;
+        };
     }
 }
