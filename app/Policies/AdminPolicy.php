@@ -16,7 +16,7 @@ class AdminPolicy
 
         $id = (int)$request->resourceId;
 
-        if($user->id === $id){
+        if ($user->id === $id) {
             return true;
         }
 
@@ -49,5 +49,15 @@ class AdminPolicy
         }
 
         return !$admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('delete admin');
+    }
+
+    public function viewBackups($user)
+    {
+        return $user->hasPermissionTo('view backups');
+    }
+
+    public function viewSettings($user)
+    {
+        return $user->hasPermissionTo('view settings');
     }
 }

@@ -70,26 +70,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        $hasAnalytics = setting('analytics.view_id') && !empty(setting('analytics.credentials'));
-
-        $analyticCards = $this->_when($hasAnalytics, function () {
-            return [
-                new \Tightenco\NovaGoogleAnalytics\ActiveUsers,
-                new \Tightenco\NovaGoogleAnalytics\PageViewsMetric,
-                new \Tightenco\NovaGoogleAnalytics\VisitorsMetric,
-                new \Tightenco\NovaGoogleAnalytics\ReferrersList,
-                new \Tightenco\NovaGoogleAnalytics\TopBrowsers,
-                new \Tightenco\NovaGoogleAnalytics\TopCountries,
-                new \Tightenco\NovaGoogleAnalytics\MostVisitedPagesCard,
-            ];
-        }, []);
-
-
         return array_merge([
             NewUser::make()->canSeeWhen('view user'),
-        ], $analyticCards);
-
-        return [];
+        ], $this->analyticCards());
     }
 
     /**
@@ -114,8 +97,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->isSuper();
             }),
 
-            BackupTool::make(),
-            SettingTool::make(),
+            BackupTool::make()->canSeeWhen('viewBackups', Admin::class),
+            SettingTool::make()->canSeeWhen('viewSettings', Admin::class),
             NovaNotifications::make()
         ];
     }
@@ -130,13 +113,31 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         //
     }
 
-
-    protected function _when($condition, $value, $default = null)
+    private function _when($condition, $value, $default = null)
     {
         if ($condition) {
             return value($value);
         }
 
         return func_num_args() === 3 ? value($default) : new MissingValue;
+    }
+
+    private function analyticCards()
+    {
+        $credentials = config('analytics.credentials');
+
+        $hasAnalytics = !empty(config('analytics.view_id')) && ((is_file($credentials) && file_exists($credentials)) || is_array($credentials));
+
+        return $this->_when($hasAnalytics, function () {
+            return [
+                new \Tightenco\NovaGoogleAnalytics\ActiveUsers,
+                new \Tightenco\NovaGoogleAnalytics\PageViewsMetric,
+                new \Tightenco\NovaGoogleAnalytics\VisitorsMetric,
+                new \Tightenco\NovaGoogleAnalytics\ReferrersList,
+                new \Tightenco\NovaGoogleAnalytics\TopBrowsers,
+                new \Tightenco\NovaGoogleAnalytics\TopCountries,
+                new \Tightenco\NovaGoogleAnalytics\MostVisitedPagesCard,
+            ];
+        }, []);
     }
 }

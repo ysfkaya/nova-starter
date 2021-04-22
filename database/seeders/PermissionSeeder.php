@@ -31,5 +31,8 @@ class PermissionSeeder extends Seeder
         $this->makePermission('user');
         $this->makePermission('admin');
         $this->makePermission('page');
+
+        $this->makeOnlyPermission('backups',['view']);
+        $this->makeOnlyPermission('settings',['view']);
     }
 }
