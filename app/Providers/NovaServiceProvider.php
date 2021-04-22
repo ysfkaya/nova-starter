@@ -12,6 +12,7 @@ use Mirovit\NovaNotifications\NovaNotifications;
 use Davidpiesse\NovaMaintenanceMode\Tool as Maintance;
 use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Support\Facades\Route;
+use Spatie\BackupTool\BackupTool;
 use Ysfkaya\Settings\SettingTool;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -76,8 +77,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 new \Tightenco\NovaGoogleAnalytics\ActiveUsers,
                 new \Tightenco\NovaGoogleAnalytics\PageViewsMetric,
                 new \Tightenco\NovaGoogleAnalytics\VisitorsMetric,
-                // new \Tightenco\NovaGoogleAnalytics\ReferrersList,
+                new \Tightenco\NovaGoogleAnalytics\ReferrersList,
                 new \Tightenco\NovaGoogleAnalytics\TopBrowsers,
+                new \Tightenco\NovaGoogleAnalytics\TopCountries,
                 new \Tightenco\NovaGoogleAnalytics\MostVisitedPagesCard,
             ];
         }, []);
@@ -112,6 +114,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 return $request->user()->isSuper();
             }),
 
+            BackupTool::make(),
             SettingTool::make(),
             NovaNotifications::make()
         ];
