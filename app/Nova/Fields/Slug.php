@@ -6,11 +6,10 @@ use Laravel\Nova\Fields\Slug as Field;
 
 class Slug extends Field
 {
-
     /**
-     * Show customize button action
+     * Show customize button action.
      *
-     * @param boolean|callable $value
+     * @param bool|callable $value
      *
      * @return $this
      */

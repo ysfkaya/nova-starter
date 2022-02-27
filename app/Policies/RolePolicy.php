@@ -16,7 +16,7 @@ class RolePolicy
 
     public function view($user, Role $role): bool
     {
-        return !in_array($role->name, Role::IGNORE_ROLES) && $user->hasPermissionTo('view role');
+        return ! in_array($role->name, Role::IGNORE_ROLES) && $user->hasPermissionTo('view role');
     }
 
     public function create($user): bool
@@ -26,11 +26,11 @@ class RolePolicy
 
     public function update($user, Role $role): bool
     {
-        return !in_array($role->name, Role::IGNORE_ROLES) && $user->hasPermissionTo('update role');
+        return ! in_array($role->name, Role::IGNORE_ROLES) && $user->hasPermissionTo('update role');
     }
 
     public function delete($user, Role $role): bool
     {
-        return !in_array($role->name, Role::IGNORE_ROLES) && $user->hasPermissionTo('delete role');
+        return ! in_array($role->name, Role::IGNORE_ROLES) && $user->hasPermissionTo('delete role');
     }
 }

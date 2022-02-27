@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 trait AuthorizeForAdmin
 {
-
     /**
      * Determine if the current user can view the given resource or throw an exception.
      *

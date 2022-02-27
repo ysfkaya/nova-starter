@@ -14,9 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$pattern = '^(?!' . ltrim(config('nova.path'), '/') . '|nova-.).*$';
-
+$pattern = '^(?!'.ltrim(config('nova.path'), '/').'|nova-.).*$';
 
 Route::get('{slug?}', PageController::class)->where([
-    'slug' => $pattern
+    'slug' => $pattern,
 ])->name('page');

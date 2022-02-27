@@ -89,8 +89,8 @@ class Role extends Resource
 
             Text::make(__('nova-permission-tool::roles.name'), 'name')
                 ->rules(['required', 'string', 'max:255'])
-                ->creationRules('unique:' . config('permission.table_names.roles'))
-                ->updateRules('unique:' . config('permission.table_names.roles') . ',name,{{resourceId}}'),
+                ->creationRules('unique:'.config('permission.table_names.roles'))
+                ->updateRules('unique:'.config('permission.table_names.roles').',name,{{resourceId}}'),
 
             Hidden::make(__('nova-permission-tool::roles.guard_name'), 'guard_name')->default('admin'),
 
@@ -108,7 +108,7 @@ class Role extends Resource
 
     public static function icon(): string
     {
-        return <<<HTML
+        return <<<'HTML'
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
      class="sidebar-icon"
 	 viewBox="0 0 512 512"

@@ -13,6 +13,7 @@ use Waynestate\Nova\CKEditor;
 class PageFields
 {
     public static Request $request;
+
     public static Page $resource;
 
     /**
@@ -38,7 +39,7 @@ class PageFields
                 Slug::make(__('Slug'), 'slug')
                     ->rules('required', 'string', 'max:255')
                     ->from('title.en')
-                    ->showCustomizeButton(!$untouchable),
+                    ->showCustomizeButton(! $untouchable),
 
                 CKEditor::make(__('Body'), 'body')->rules('nullable'),
 
@@ -53,7 +54,7 @@ class PageFields
             new NovaTab('SEO', [
                 Text::make(__('Title'), 'options->seo->title')->rules('nullable', 'string', 'max:255'),
                 Text::make(__('Description'), 'options->seo->description')->rules('nullable', 'string', 'max:160'),
-            ])
+            ]),
 
         ];
     }

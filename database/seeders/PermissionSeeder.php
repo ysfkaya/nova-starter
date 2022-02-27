@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Traits\PermissionMakeable;
 use App\Models\Role;
+use App\Traits\PermissionMakeable;
 use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
@@ -19,12 +19,12 @@ class PermissionSeeder extends Seeder
     {
         Role::firstOrCreate([
             'name' => 'developer',
-            'guard_name' => 'admin'
+            'guard_name' => 'admin',
         ]);
 
         Role::firstOrCreate([
             'name' => 'owner',
-            'guard_name' => 'admin'
+            'guard_name' => 'admin',
         ]);
 
         $this->makePermission('role');
@@ -32,7 +32,7 @@ class PermissionSeeder extends Seeder
         $this->makePermission('admin');
         $this->makePermission('page');
 
-        $this->makeOnlyPermission('backups',['view']);
-        $this->makeOnlyPermission('settings',['view']);
+        $this->makeOnlyPermission('backups', ['view']);
+        $this->makeOnlyPermission('settings', ['view']);
     }
 }

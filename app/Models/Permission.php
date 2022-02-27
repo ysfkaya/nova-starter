@@ -2,27 +2,29 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Models\Permission as Model;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission as Model;
 
 class Permission extends Model
 {
-    const ACTIONS = [
+    public const ACTIONS = [
         'create',
         'delete',
         'update',
         'view',
         'restore',
-        'force delete'
+        'force delete',
     ];
 
     protected $appends = [
-        'translated_name'
+        'translated_name',
     ];
 
     public function getTranslatedNameAttribute()
     {
-        if (!isset($this->attributes['name'])) return '';
+        if (! isset($this->attributes['name'])) {
+            return '';
+        }
 
         $attribute = $this->attributes['name'];
 

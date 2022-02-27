@@ -5,7 +5,6 @@ namespace App\Nova;
 use App\Traits\ResourceLabels;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
-use Illuminate\Support\Str;
 
 abstract class Resource extends NovaResource
 {

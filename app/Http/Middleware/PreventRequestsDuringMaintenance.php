@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
 use Closure;
+use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
 use Illuminate\Support\Facades\Auth;
 
 class PreventRequestsDuringMaintenance extends Middleware
@@ -17,7 +17,7 @@ class PreventRequestsDuringMaintenance extends Middleware
         '/cp',
         '/cp/*',
         '/nova-api/*',
-        '/nova-vendor/*'
+        '/nova-vendor/*',
     ];
 
     /**

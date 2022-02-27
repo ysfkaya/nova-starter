@@ -4,12 +4,11 @@ namespace App\Nova\Contracts;
 
 use Arsenaltech\NovaTab\NovaTab;
 use Arsenaltech\NovaTab\NovaTabs;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Panel;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Resource;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\FieldCollection;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Panel;
+use Laravel\Nova\Resource;
 
 trait Tabs
 {
@@ -17,7 +16,7 @@ trait Tabs
     {
         $updateFields = parent::updateFields($request);
 
-        if (!$request->isMethod('get')) {
+        if (! $request->isMethod('get')) {
             return $updateFields;
         }
 
@@ -51,7 +50,7 @@ trait Tabs
     {
         $creationFields = parent::creationFields($request);
 
-        if (!$request->isMethod('get')) {
+        if (! $request->isMethod('get')) {
             return $creationFields;
         }
 
@@ -74,20 +73,19 @@ trait Tabs
             $this->assignFieldsToTabs($request, $fields);
 
             return FieldCollection::make([
-                (NovaTabs::make('tabs'))->withMeta(['fields' => $fields->values()])
+                (NovaTabs::make('tabs'))->withMeta(['fields' => $fields->values()]),
             ]);
         }
 
         return $fields;
     }
 
-
     protected function assignFieldsToTabs(NovaRequest $request, FieldCollection $fields)
     {
         $action = head(array_keys(array_filter([
             'create' => $request->isCreateOrAttachRequest(),
             'detail' => $request->isResourceDetailRequest(),
-            'update' => $request->isUpdateOrUpdateAttachedRequest()
+            'update' => $request->isUpdateOrUpdateAttachedRequest(),
         ])));
 
         $method = Str::camel("default-name-for-{$action}");
@@ -99,7 +97,7 @@ trait Tabs
 
             $field->meta['tab'] = [
                 'name' => $name,
-                'html' => $field->meta['tabHTML'] ?? $name
+                'html' => $field->meta['tabHTML'] ?? $name,
             ];
         }
 

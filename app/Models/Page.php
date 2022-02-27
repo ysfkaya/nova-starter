@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-
 class Page extends Model
 {
     use HasFactory, HasSlug;
 
-    const DEFAULTS = ['/'];
+    public const DEFAULTS = ['/'];
 
     public function getSlugOptions(): SlugOptions
     {
@@ -25,7 +24,7 @@ class Page extends Model
 
     public function scopeSlug(Builder $scope, string $slug): Builder
     {
-        return $scope->where("slug", $slug);
+        return $scope->where('slug', $slug);
     }
 
     public static function findBySlug(string $slug, array $columns = ['*'])

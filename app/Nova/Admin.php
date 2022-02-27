@@ -15,162 +15,161 @@ use Vyuldashev\NovaPermission\RoleSelect;
 
 class Admin extends Resource
 {
-	use AuthorizeForAdmin;
+    use AuthorizeForAdmin;
 
-	/**
-	 * The model the resource corresponds to.
-	 *
-	 * @var string
-	 */
-	public static $model = \App\Models\Admin::class;
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \App\Models\Admin::class;
 
-	/**
-	 * The single value that should be used to represent the resource when being displayed.
-	 *
-	 * @var string
-	 */
-	public static $title = 'name';
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $title = 'name';
 
-	/**
-	 * The columns that should be searched.
-	 *
-	 * @var array
-	 */
-	public static $search = [
-		'id', 'name', 'email',
-	];
+    /**
+     * The columns that should be searched.
+     *
+     * @var array
+     */
+    public static $search = [
+        'id', 'name', 'email',
+    ];
 
-	/**
-	 * @inheritDoc
-	 */
-	public static function indexQuery(NovaRequest $request, $query)
-	{
-		$query = $query->where('id', '<>', $request->user()->id);
+    /**
+     * @inheritDoc
+     */
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        $query = $query->where('id', '<>', $request->user()->id);
 
-		return $query->whereDoesntHave('roles', function ($q) {
-			return $q->withIgnoreRoles();
-		});
-	}
+        return $query->whereDoesntHave('roles', function ($q) {
+            return $q->withIgnoreRoles();
+        });
+    }
 
-	/**
-	 * Get the fields displayed by the resource.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return array
-	 */
-	public function fields(Request $request)
-	{
-		$roleClass = app(PermissionRegistrar::class)->getRoleClass();
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        $roleClass = app(PermissionRegistrar::class)->getRoleClass();
 
-		$roleOptions = $roleClass::ignoreRoles()->get()->pluck($labelAttribute ?? 'name', 'name')->toArray();
+        $roleOptions = $roleClass::ignoreRoles()->get()->pluck($labelAttribute ?? 'name', 'name')->toArray();
 
-		return [
-			ID::make()->sortable(),
+        return [
+            ID::make()->sortable(),
 
-			Gravatar::make()->maxWidth(50),
+            Gravatar::make()->maxWidth(50),
 
-			Text::make('Yönetici Adı', 'name')
-				->sortable()
-				->rules('required', 'max:255'),
+            Text::make('Yönetici Adı', 'name')
+                ->sortable()
+                ->rules('required', 'max:255'),
 
-			Text::make('Email')
-				->sortable()
-				->rules('required', 'email', 'max:254')
-				->creationRules('unique:admins,email')
-				->updateRules('unique:admins,email,{{resourceId}}'),
+            Text::make('Email')
+                ->sortable()
+                ->rules('required', 'email', 'max:254')
+                ->creationRules('unique:admins,email')
+                ->updateRules('unique:admins,email,{{resourceId}}'),
 
-			RoleSelect::make('Yetkiler', 'roles')
-				->options($roleOptions)
-				->canSee($this->canSeeRoles()),
+            RoleSelect::make('Yetkiler', 'roles')
+                ->options($roleOptions)
+                ->canSee($this->canSeeRoles()),
 
-			Password::make('Şifre', 'password')
-				->onlyOnForms()
-				->creationRules('required', 'string', 'min:8')
-				->updateRules('nullable', 'string', 'min:8'),
-		];
-	}
+            Password::make('Şifre', 'password')
+                ->onlyOnForms()
+                ->creationRules('required', 'string', 'min:8')
+                ->updateRules('nullable', 'string', 'min:8'),
+        ];
+    }
 
-	/**
-	 * Get the cards available for the request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return array
-	 */
-	public function cards(Request $request)
-	{
-		return [];
-	}
+    /**
+     * Get the cards available for the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function cards(Request $request)
+    {
+        return [];
+    }
 
-	/**
-	 * Get the filters available for the resource.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return array
-	 */
-	public function filters(Request $request)
-	{
-		return [];
-	}
+    /**
+     * Get the filters available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function filters(Request $request)
+    {
+        return [];
+    }
 
-	/**
-	 * Get the lenses available for the resource.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return array
-	 */
-	public function lenses(Request $request)
-	{
-		return [];
-	}
+    /**
+     * Get the lenses available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function lenses(Request $request)
+    {
+        return [];
+    }
 
-	/**
-	 * Get the actions available for the resource.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return array
-	 */
-	public function actions(Request $request)
-	{
-		return [];
-	}
+    /**
+     * Get the actions available for the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return [];
+    }
 
-	/**
-	 * Can see callback for roles
-	 *
-	 * @return \Closure
-	 */
-	private function canSeeRoles()
-	{
-		return function ($request) {
-			$isSuperUser = ($user = $request->user())->hasAnyRole(Role::IGNORE_ROLES);
+    /**
+     * Can see callback for roles.
+     *
+     * @return \Closure
+     */
+    private function canSeeRoles()
+    {
+        return function ($request) {
+            $isSuperUser = ($user = $request->user())->hasAnyRole(Role::IGNORE_ROLES);
 
-			$own = $this->id == $user->id;
+            $own = $this->id == $user->id;
 
-			if (
-				$this->resource->hasAnyRole(Role::IGNORE_ROLES) ||
-				$own ||
-				($isSuperUser && $request->isUpdateOrUpdateAttachedRequest() && $own)
-			) {
-				return false;
-			}
+            if (
+                $this->resource->hasAnyRole(Role::IGNORE_ROLES) ||
+                $own ||
+                ($isSuperUser && $request->isUpdateOrUpdateAttachedRequest() && $own)
+            ) {
+                return false;
+            }
 
-			if ($isSuperUser) {
-				return true;
-			}
+            if ($isSuperUser) {
+                return true;
+            }
 
-			return $user->can('update role');
-		};
-	}
+            return $user->can('update role');
+        };
+    }
 
-
-	/**
-	 * Get the icon
-	 *
-	 * @return string
-	 */
-	public static function icon()
-	{
-		return <<<HTML
+    /**
+     * Get the icon.
+     *
+     * @return string
+     */
+    public static function icon()
+    {
+        return <<<'HTML'
 <svg
     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
     class="sidebar-icon"
@@ -366,5 +365,5 @@ class Admin extends Resource
 </g>
 </svg>
 HTML;
-	}
+    }
 }

@@ -17,9 +17,8 @@ trait PermissionMakeable
         'u' => 'update',
         'd' => 'delete',
         'fd' => 'force delete',
-        're' => 'restore'
+        're' => 'restore',
     ];
-
 
     protected function makePermission($name, $exceptAbilities = [], $extraAbilities = [])
     {
@@ -34,7 +33,7 @@ trait PermissionMakeable
         foreach ($abilities as $ability) {
             $ability = $this->equivalentPermissions[$ability] ?? $ability;
 
-            $attributes = $this->withGuardAttribute(['name' => $ability . ' ' . $name]);
+            $attributes = $this->withGuardAttribute(['name' => $ability.' '.$name]);
 
             $attributes = array_merge(['group' => $name], $attributes);
 

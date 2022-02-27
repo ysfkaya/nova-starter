@@ -6,7 +6,7 @@ use Spatie\Permission\Models\Role as Model;
 
 class Role extends Model
 {
-    const IGNORE_ROLES = ['developer', 'owner'];
+    public const IGNORE_ROLES = ['developer', 'owner'];
 
     protected $appends = ['prepared_permissions'];
 

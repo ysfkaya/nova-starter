@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AdminPolicy
@@ -14,7 +13,7 @@ class AdminPolicy
     {
         $request = request();
 
-        $id = (int)$request->resourceId;
+        $id = (int) $request->resourceId;
 
         if ($user->id === $id) {
             return true;
@@ -25,7 +24,7 @@ class AdminPolicy
 
     public function view($user, $admin): bool
     {
-        return !$admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('view admin');
+        return ! $admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('view admin');
     }
 
     public function create($user): bool
@@ -39,7 +38,7 @@ class AdminPolicy
             return true;
         }
 
-        return !$admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('update admin');
+        return ! $admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('update admin');
     }
 
     public function delete($user, $admin): bool
@@ -48,7 +47,7 @@ class AdminPolicy
             return false;
         }
 
-        return !$admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('delete admin');
+        return ! $admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('delete admin');
     }
 
     public function viewBackups($user)

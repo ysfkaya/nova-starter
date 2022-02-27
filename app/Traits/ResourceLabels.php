@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 
 trait ResourceLabels
 {
-
     /**
      * Get the displayable label of the resource.
      *
@@ -28,7 +27,7 @@ trait ResourceLabels
     }
 
     /**
-     * Get the called class label
+     * Get the called class label.
      *
      * @return string
      */

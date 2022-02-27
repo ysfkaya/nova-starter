@@ -4,14 +4,13 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use App\Nova\Metrics\NewUser;
+use Davidpiesse\NovaMaintenanceMode\Tool as Maintance;
+use Illuminate\Http\Resources\MissingValue;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Nova\Cards\Help;
+use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 use Mirovit\NovaNotifications\NovaNotifications;
-use Davidpiesse\NovaMaintenanceMode\Tool as Maintance;
-use Illuminate\Http\Resources\MissingValue;
-use Illuminate\Support\Facades\Route;
 use Spatie\BackupTool\BackupTool;
 use Ysfkaya\Settings\SettingTool;
 
@@ -39,7 +38,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             ->withPasswordResetRoutes()
             ->register();
 
-        $prefix = Nova::path() . '/filemanager';
+        $prefix = Nova::path().'/filemanager';
 
         Route::middleware(config('nova.middleware', []))
             ->domain(config('nova.domain', null))
@@ -99,7 +98,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
             BackupTool::make()->canSeeWhen('viewBackups', Admin::class),
             SettingTool::make()->canSeeWhen('viewSettings', Admin::class),
-            NovaNotifications::make()
+            NovaNotifications::make(),
         ];
     }
 
@@ -126,7 +125,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         $credentials = config('analytics.credentials');
 
-        $hasAnalytics = !empty(config('analytics.view_id')) && ((is_file($credentials) && file_exists($credentials)) || is_array($credentials));
+        $hasAnalytics = ! empty(config('analytics.view_id')) && ((is_file($credentials) && file_exists($credentials)) || is_array($credentials));
 
         return $this->_when($hasAnalytics, function () {
             return [

@@ -22,7 +22,6 @@ class PageOptions implements ArrayAccess
         $this->object = json_decode(json_encode($this->options), false, 512, JSON_FORCE_OBJECT);
     }
 
-
     /**
      * Determine if an item exists at an offset.
      *

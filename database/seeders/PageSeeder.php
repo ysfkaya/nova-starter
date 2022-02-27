@@ -18,7 +18,7 @@ class PageSeeder extends Seeder
         Page::create([
             'title' => 'Anasayfa',
             'slug' => '/',
-            'template' => 'home'
+            'template' => 'home',
         ]);
     }
 }

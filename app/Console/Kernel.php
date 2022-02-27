@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('backup:run --only-db --filename=' . $this->backupOnlyDbFilename())->dailyAt('03:00')->evenInMaintenanceMode();
+        $schedule->command('backup:run --only-db --filename='.$this->backupOnlyDbFilename())->dailyAt('03:00')->evenInMaintenanceMode();
         $schedule->command('backup:run')->monthly()->evenInMaintenanceMode();
         $schedule->command('backup:clean')->daily();
     }
@@ -36,13 +36,13 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }
 
     private function backupOnlyDbFilename()
     {
-        return 'only-db-' . date('Y-m-d-H-i-s') . '.zip';
+        return 'only-db-'.date('Y-m-d-H-i-s').'.zip';
     }
 }

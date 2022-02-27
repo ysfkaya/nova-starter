@@ -1,4 +1,5 @@
 <?php
+
 return [
     /*
     |--------------------------------------------------------------------------------
@@ -21,13 +22,13 @@ return [
             ['Link', 'Unlink', 'Anchor'],
             '/',
             ['Format', 'FontSize'],
-            ['Maximize', 'ShowBlocks', '-', 'About']
+            ['Maximize', 'ShowBlocks', '-', 'About'],
         ],
 
         'filebrowserImageBrowseUrl' => '/cp/filemanager?type=Images',
         'filebrowserImageUploadUrl' => '/cp/filemanager/upload?type=Images&_token=',
         'filebrowserBrowseUrl' => '/cp/filemanager?type=Files',
-        'filebrowserUploadUrl' => '/cp/filemanager/upload?type=Files&_token='
+        'filebrowserUploadUrl' => '/cp/filemanager/upload?type=Files&_token=',
     ],
 
     /*
