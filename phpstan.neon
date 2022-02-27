@@ -1,0 +1,13 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    checkModelProperties: true
+    paths:
+        - app
+        - routes
+    level: 6
+    ignoreErrors:
+        - '#Method [a-zA-Z0-9\\_]+::restore\(\) should return bool|Illuminate\\Auth\\Access\\Response but return statement is missing.#'
+        - '#Method [a-zA-Z0-9\\_]+::[a-zA-Z\\_]+\(\) should return Illuminate\\Http\\Response but returns [App\\Http\\Resources(.*)|Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection]#'
+    checkMissingIterableValueType: false

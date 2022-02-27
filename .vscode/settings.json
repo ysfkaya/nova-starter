@@ -1,0 +1,7 @@
+{
+    "php-cs-fixer.executablePath": "${workspaceFolder}/vendor/bin/php-cs-fixer",
+    "php-cs-fixer.allowRisky": true,
+    "yaml.schemas": {
+        "https://json.schemastore.org/github-workflow.json": "file:///Users/ysfkaya/Penta/nova-starter/.github/workflows/deploy.yml"
+    }
+}
