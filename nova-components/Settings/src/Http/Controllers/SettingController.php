@@ -39,21 +39,15 @@ class SettingController extends Controller
     {
         $this->validate($request, Setting::rules(), [], Setting::customAttributes());
 
-        $requestAttributes = $this->replaceBrackets($request->except('_token', '_method'));
+        $request = resolve(UpdateResourceRequest::class)->merge($request->all());
 
-        $attributes = $requestAttributes;
-
-        foreach ($attributes as $key => $attribute) {
-            if ($attribute instanceof UploadedFile) {
-                $currentFile = setting($key);
-
-                if ($currentFile && Storage::disk(Setting::$disk)->exists($currentFile)) {
-                    Storage::disk(Setting::$disk)->delete($currentFile);
-                }
-
-                $attributes[$key] = $attribute->store('media/settings', Setting::$disk);
-            }
-        }
+        $attributes = Setting::filledModels($request)->map->flatMap(function ($model) {
+            return [$model->key => $model->value];
+        })->values()->flatMap(function ($v) {
+            return $v->all();
+        })->filter(function ($v, $k) {
+            return !empty($k);
+        })->all();
 
         setting($attributes)->save();
 
@@ -85,23 +79,5 @@ class SettingController extends Controller
         return response()->json([
             'success' => true,
         ]);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @param string $from
-     * @param string $to
-     *
-     * @return array
-     */
-    protected function replaceBrackets(array $data, $from = Setting::BRACKETS, $to = '.')
-    {
-        return collect($data)
-            ->mapWithKeys(function ($attr, $key) use ($from, $to) {
-                $replacedKey = Str::replaceFirst($from, $to, $key);
-
-                return [$replacedKey => $attr];
-            })->toArray();
     }
 }

@@ -8,6 +8,9 @@ use Illuminate\Support\Str;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\Heading;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Ysfkaya\Settings\Models\SettingModel;
 
 /**
  * Class Setting
@@ -112,6 +115,43 @@ class Setting
         return $attributes;
     }
 
+    public static function filledModels(NovaRequest $request)
+    {
+        return self::allTabs()->map(function ($tab) use ($request) {
+            return collect($tab['fields'])->reject(function ($field) {
+                return is_object($field) && $field instanceof Heading;
+            })->map(function ($field) use ($request) {
+                $model = new SettingModel;
+
+                $field->fill($request, $model);
+
+                return $model;
+            });
+        });
+    }
+
+    /**
+     * @param array $data
+     *
+     * @param string $from
+     * @param string $to
+     *
+     * @return array
+     */
+    public static function replaceBrackets(array|string $data, $from = self::BRACKETS, $to = '.')
+    {
+        if (is_string($data)) {
+            return Str::replaceFirst($from, $to, $data);
+        }
+
+        return collect($data)
+            ->mapWithKeys(function ($attr, $key) use ($from, $to) {
+                $replacedKey = Str::replaceFirst($from, $to, $key);
+
+                return [$replacedKey => $attr];
+            })->toArray();
+    }
+
     /**
      * @param string $brackets
      *
@@ -133,7 +173,7 @@ class Setting
 
                     $field->attribute = $key . $brackets . $field->attribute;
 
-                    $defaultCallback = Closure::bind(fn($class) => $class->defaultCallback, null, get_class($field))($field);
+                    $defaultCallback = Closure::bind(fn ($class) => $class->defaultCallback, null, get_class($field))($field);
 
                     $default = $field->value ?? value($defaultCallback);
 
@@ -161,7 +201,7 @@ class Setting
     {
         return collect($fields)->map(function ($field) {
             if ($field instanceof File) {
-                $field = $field->disk(self::$disk);
+                $field = $field->deletable(false)->prunable();
             }
 
             return $field;

@@ -5,8 +5,6 @@ Nova.booting((Vue, router) => {
 
     Vue.component("tab", Tab);
 
-    Vue.component("form-setting-file-field", require("./field/SettingImage"));
-
     router.addRoutes([
         {
             name: "settings",
