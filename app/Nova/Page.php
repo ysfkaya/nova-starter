@@ -10,6 +10,9 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Waynestate\Nova\CKEditor;
 
+/**
+ * @mixin \App\Models\Page
+ */
 class Page extends Resource
 {
     use Tabs;

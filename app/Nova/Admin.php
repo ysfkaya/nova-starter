@@ -13,6 +13,9 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Spatie\Permission\PermissionRegistrar;
 use Vyuldashev\NovaPermission\RoleSelect;
 
+/**
+ * @mixin \App\Models\Admin
+ */
 class Admin extends Resource
 {
     use AuthorizeForAdmin;
@@ -62,6 +65,7 @@ class Admin extends Resource
     {
         $roleClass = app(PermissionRegistrar::class)->getRoleClass();
 
+        // @phpstan-ignore-next-line
         $roleOptions = $roleClass::ignoreRoles()->get()->pluck($labelAttribute ?? 'name', 'name')->toArray();
 
         return [
@@ -147,8 +151,10 @@ class Admin extends Resource
             $own = $this->id == $user->id;
 
             if (
+                // @phpstan-ignore-next-line
                 $this->resource->hasAnyRole(Role::IGNORE_ROLES) ||
                 $own ||
+                // @phpstan-ignore-next-line
                 ($isSuperUser && $request->isUpdateOrUpdateAttachedRequest() && $own)
             ) {
                 return false;

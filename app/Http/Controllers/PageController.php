@@ -13,6 +13,7 @@ class PageController extends Controller
      * Handle the incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
     public function __invoke(Request $request, $slug = '/')

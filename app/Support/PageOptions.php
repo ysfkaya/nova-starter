@@ -5,6 +5,9 @@ namespace App\Support;
 use App\Models\Page;
 use ArrayAccess;
 
+/**
+ * @property object $seo
+ */
 class PageOptions implements ArrayAccess
 {
     public Page $page;
@@ -28,7 +31,7 @@ class PageOptions implements ArrayAccess
      * @param  mixed  $key
      * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         return isset($this->options[$key]);
     }
@@ -51,7 +54,7 @@ class PageOptions implements ArrayAccess
      * @param  mixed  $value
      * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         if (is_null($key)) {
             $this->options[] = $value;
@@ -66,11 +69,16 @@ class PageOptions implements ArrayAccess
      * @param  string  $key
      * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         unset($this->options[$key]);
     }
 
+    /**
+     * @param string $key
+     *
+     * @return mixed
+     */
     public function __get($key)
     {
         return $this->object->{$key} ?? '';

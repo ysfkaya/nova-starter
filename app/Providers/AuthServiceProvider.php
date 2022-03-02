@@ -32,6 +32,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::policy(config('permission.models.permission'), RolePolicy::class);
     }
 
+    /**
+     * @return \Closure
+     */
     private function beforeGateCallback()
     {
         return function ($user, $ability, $arguments) {

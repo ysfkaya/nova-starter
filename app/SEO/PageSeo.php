@@ -19,15 +19,15 @@ class PageSeo implements SEOFriendly
     /**
      * Performs SEO settings.
      *
-     * @param SEOTools $SEOTools
+     * @param SEOTools $seo
      */
-    public function loadSEO(SEOTools $seo)
+    public function loadSEO(SEOTools $seo): void
     {
-        $description = $this->options->seo_description ?: Str::limit(strip_tags($this->page->body), 160, '...');
+        $description = $this->options->seo['description'] ?? Str::limit(strip_tags($this->page->body), 160, '...');
 
         $description = str_replace(['&nbsp;'], '', $description);
 
-        $seo->setTitle($this->options->seo_title ?: $this->page->title)
+        $seo->setTitle($this->options->seo['title'] ?? $this->page->title)
             ->setDescription(trim($description))
             ->setCanonical($this->page->url);
     }

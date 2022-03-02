@@ -112,6 +112,13 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         //
     }
 
+    /**
+     * @param bool $condition
+     * @param mixed $value
+     * @param mixed $default
+     *
+     * @return mixed
+     */
     private function _when($condition, $value, $default = null)
     {
         if ($condition) {
@@ -121,6 +128,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return func_num_args() === 3 ? value($default) : new MissingValue;
     }
 
+    /**
+     * @return array
+     */
     private function analyticCards()
     {
         $credentials = config('analytics.credentials');

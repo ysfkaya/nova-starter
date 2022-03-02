@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -9,7 +10,7 @@ class AdminPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny($user): bool
+    public function viewAny(Admin $user): bool
     {
         $request = request();
 
@@ -22,17 +23,17 @@ class AdminPolicy
         return $user->hasAnyPermission(['view admin', 'create admin', 'update admin', 'delete admin']);
     }
 
-    public function view($user, $admin): bool
+    public function view(Admin $user, Admin $admin): bool
     {
         return ! $admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('view admin');
     }
 
-    public function create($user): bool
+    public function create(Admin $user): bool
     {
         return $user->hasPermissionTo('create admin');
     }
 
-    public function update($user, $admin): bool
+    public function update(Admin $user, Admin $admin): bool
     {
         if ($user->id === $admin->id) {
             return true;
@@ -41,7 +42,7 @@ class AdminPolicy
         return ! $admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('update admin');
     }
 
-    public function delete($user, $admin): bool
+    public function delete(Admin $user, Admin $admin): bool
     {
         if ($user->id === $admin->id) {
             return false;
@@ -50,12 +51,12 @@ class AdminPolicy
         return ! $admin->hasAnyRole(Role::IGNORE_ROLES) && $user->hasPermissionTo('delete admin');
     }
 
-    public function viewBackups($user)
+    public function viewBackups(Admin $user): bool
     {
         return $user->hasPermissionTo('view backups');
     }
 
-    public function viewSettings($user)
+    public function viewSettings(Admin $user): bool
     {
         return $user->hasPermissionTo('view settings');
     }

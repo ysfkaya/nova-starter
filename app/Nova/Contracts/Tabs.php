@@ -4,14 +4,26 @@ namespace App\Nova\Contracts;
 
 use Arsenaltech\NovaTab\NovaTab;
 use Arsenaltech\NovaTab\NovaTabs;
+use Exception;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Laravel\Nova\Fields\FieldCollection;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpFoundation\Exception\SuspiciousOperationException;
 
 trait Tabs
 {
+    /**
+     * @param NovaRequest $request
+     * @return mixed
+     * @throws InvalidArgumentException
+     * @throws BadRequestException
+     * @throws SuspiciousOperationException
+     * @throws Exception
+     */
     public function updateFields(NovaRequest $request)
     {
         $updateFields = parent::updateFields($request);
@@ -20,6 +32,7 @@ trait Tabs
             return $updateFields;
         }
 
+        // @phpstan-ignore-next-line
         $updateFields = $this->availableTabs($request, FieldCollection::make($updateFields));
 
         return $updateFields;
@@ -35,6 +48,7 @@ trait Tabs
     {
         $detailFields = parent::serializeForDetail($request, $resource);
 
+        // @phpstan-ignore-next-line
         $detailFields['fields'] = $this->availableTabs($request, FieldCollection::make($detailFields['fields']));
 
         return $detailFields;
@@ -54,6 +68,7 @@ trait Tabs
             return $creationFields;
         }
 
+        // @phpstan-ignore-next-line
         return $this->availableTabs($request, FieldCollection::make($creationFields));
     }
 
@@ -70,6 +85,7 @@ trait Tabs
         $tabs = collect(array_values($this->{$method}($request)))->whereInstanceOf(NovaTab::class)->values();
 
         if (count($tabs) > 0) {
+            // @phpstan-ignore-next-line
             $this->assignFieldsToTabs($request, $fields);
 
             return FieldCollection::make([
@@ -80,7 +96,7 @@ trait Tabs
         return $fields;
     }
 
-    protected function assignFieldsToTabs(NovaRequest $request, FieldCollection $fields)
+    protected function assignFieldsToTabs(NovaRequest $request, FieldCollection $fields): FieldCollection
     {
         $action = head(array_keys(array_filter([
             'create' => $request->isCreateOrAttachRequest(),

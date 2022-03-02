@@ -14,7 +14,7 @@ class Admin extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'name',
@@ -41,6 +41,9 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return bool
+     */
     public function isSuper()
     {
         return $this->hasAnyRole(Role::IGNORE_ROLES);

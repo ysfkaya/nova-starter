@@ -31,10 +31,12 @@ trait AuthorizeForAdmin
      */
     public function authorizedToView(Request $request)
     {
+        // @phpstan-ignore-next-line
         if ($this->resource->id === $request->user()->id) {
             return true;
         }
 
+        // @phpstan-ignore-next-line
         if ($this->resource->hasAnyRole(Role::IGNORE_ROLES)) {
             return false;
         }
@@ -65,10 +67,12 @@ trait AuthorizeForAdmin
      */
     public function authorizedToUpdate(Request $request)
     {
+        // @phpstan-ignore-next-line
         if ($this->resource->id === $request->user()->id) {
             return true;
         }
 
+        // @phpstan-ignore-next-line
         if ($this->resource->hasAnyRole(Role::IGNORE_ROLES)) {
             return false;
         }
@@ -99,6 +103,7 @@ trait AuthorizeForAdmin
      */
     public function authorizedToDelete(Request $request)
     {
+        // @phpstan-ignore-next-line
         if ($this->resource->hasAnyRole(Role::IGNORE_ROLES)) {
             return false;
         }
@@ -115,6 +120,7 @@ trait AuthorizeForAdmin
      */
     public function authorizedToForceDelete(Request $request)
     {
+        // @phpstan-ignore-next-line
         if ($this->resource->hasAnyRole(Role::IGNORE_ROLES)) {
             return false;
         }

@@ -17,6 +17,10 @@ class PageFields
     public static Page $resource;
 
     /**
+     * @param string $type
+     * @param Request $request
+     * @param mixed $resource
+     *
      * @return array
      */
     public static function fieldsFor($type, $request, $resource = null)

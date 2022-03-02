@@ -14,6 +14,11 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
 use Ysfkaya\Checkboxes\Checkboxes;
 
+/**
+ * @mixin \App\Models\Role
+ *
+ * @property string $guard_name
+ */
 class Role extends Resource
 {
     /**
@@ -43,7 +48,7 @@ class Role extends Resource
      * Build an "index" query for the given resource.
      *
      * @param \Laravel\Nova\Http\Requests\NovaRequest $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Role> $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -56,7 +61,7 @@ class Role extends Resource
      * Build a "detail" query for the given resource.
      *
      * @param \Laravel\Nova\Http\Requests\NovaRequest $request
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder<\App\Models\Role> $query
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */

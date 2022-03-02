@@ -8,27 +8,27 @@ class PermissionPolicy
 {
     use HandlesAuthorization;
 
-    public function viewAny($user): bool
+    public function viewAny(): bool
     {
         return false;
     }
 
-    public function view($user, $admin): bool
+    public function view(): bool
     {
         return false;
     }
 
-    public function create($user): bool
+    public function create(): bool
     {
         return false;
     }
 
-    public function update($user, $admin): bool
+    public function update(): bool
     {
         return false;
     }
 
-    public function delete($user, $admin): bool
+    public function delete(): bool
     {
         return false;
     }

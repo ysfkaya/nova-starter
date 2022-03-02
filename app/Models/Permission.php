@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission as Model;
 
+/**
+ * @property string $group
+ * @property string $name
+ */
 class Permission extends Model
 {
     public const ACTIONS = [
@@ -20,7 +24,7 @@ class Permission extends Model
         'translated_name',
     ];
 
-    public function getTranslatedNameAttribute()
+    public function getTranslatedNameAttribute(): string
     {
         if (! isset($this->attributes['name'])) {
             return '';
@@ -35,7 +39,7 @@ class Permission extends Model
         return __("$action :resource", ['resource' => __($name)]);
     }
 
-    private function getAction($name)
+    private function getAction(string $name): mixed
     {
         $actions = explode(' ', $name);
 

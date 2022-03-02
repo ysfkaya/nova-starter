@@ -37,10 +37,11 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
-        require base_path('routes/console.php');
     }
 
+    /**
+     * @return string
+     */
     private function backupOnlyDbFilename()
     {
         return 'only-db-'.date('Y-m-d-H-i-s').'.zip';
