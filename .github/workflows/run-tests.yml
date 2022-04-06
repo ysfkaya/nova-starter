@@ -10,8 +10,6 @@ on:
     paths:
       - "**.php"
   workflow_dispatch:
-  schedule:
-    - cron: "0 0 * * *" # Execute everyday at midnight
 
 jobs:
   php-tests:
